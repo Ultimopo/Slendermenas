@@ -11,6 +11,9 @@ public class Flashlight : MonoBehaviour
     public Light light2;
     public AudioSource source;
     public AudioClip ClickSound;
+
+    public float batteryLeft = 10;
+
     // Update is called once per frame
     void Update()
     {
@@ -18,11 +21,25 @@ public class Flashlight : MonoBehaviour
         light1.enabled = isOn;
         light2.enabled = isOn;
 
-        if (Input.GetKeyDown(KeyCode.E))
+       
+        if (batteryLeft > 0)
         {
-            isOn = !isOn;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                isOn = !isOn;
 
-            source.PlayOneShot(ClickSound);
+                source.PlayOneShot(ClickSound);
+            }
+
         }
+        if (batteryLeft < 0)
+        {
+            isOn = false;
+        }
+        if (isOn)
+        {
+            batteryLeft += -Time.deltaTime;
+        }
+       
     }
 }
